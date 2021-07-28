@@ -45,7 +45,7 @@ def get_hegel_authority(facility):
     try:
         srv = srvlookup.lookup("grpc", domain=f"hegel.{facility}.packet.net")[0]
         return f"{srv.hostname}:{srv.port}"
-    except:
+    except Exception:
         authority = "hegel.packet.net:50060"
         if facility == "lab1":
             authority = "hegel-lab1.packet.net:50060"
@@ -61,7 +61,10 @@ def connect_hegel(facility):
         iterations += 1
         authority = get_hegel_authority(facility)
         log.info("connecting to", authority=authority)
-        channel = grpc.secure_channel(authority, creds)
+        channel = grpc.secure_channel(authority, creds, options=[
+                ('grpc.keepalive_time_ms', 300000),
+                ('grpc.keepalive_permit_without_calls', 1)
+            ])
         stub = hegel_pb2_grpc.HegelStub(channel)
 
         try:
