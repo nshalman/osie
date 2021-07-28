@@ -27,6 +27,7 @@ RUN pip install -r requirements.txt && \
 
 WORKDIR /
 ADD entrypoint.sh *.py /
+ADD hegel/ /hegel/
 
 ARG GITVERSION
 ARG GITBRANCH

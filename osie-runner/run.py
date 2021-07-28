@@ -13,8 +13,8 @@ import grpc
 import requests
 import srvlookup
 
-import hegel_pb2 as hegel
-import hegel_pb2_grpc
+from hegel import hegel_pb2 as hegel
+from hegel import hegel_pb2_grpc
 import log
 import handlers
 
